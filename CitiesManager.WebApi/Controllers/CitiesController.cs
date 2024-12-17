@@ -20,7 +20,7 @@ namespace CitiesManager.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<City>>> GetCities()
         {
-            return await _context.Cities.ToListAsync();
+            return await _context.Cities.OrderBy(city => city.CityName).ToListAsync();
         }
 
         // GET: api/Cities/5
