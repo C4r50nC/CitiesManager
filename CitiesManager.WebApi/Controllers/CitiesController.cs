@@ -40,14 +40,14 @@ namespace CitiesManager.WebApi.Controllers
         // PUT: api/Cities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCity(Guid id, City city)
+        public async Task<IActionResult> PutCity(Guid id, [Bind(nameof(City.CityId), nameof(City.CityName))] City city)
         {
             if (id != city.CityId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(city).State = EntityState.Modified;
+            _context.Entry(city).State = EntityState.Modified; // Updates all fields, can be optimized to update needed fields only
 
             try
             {
@@ -71,7 +71,7 @@ namespace CitiesManager.WebApi.Controllers
         // POST: api/Cities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<City>> PostCity(City city)
+        public async Task<ActionResult<City>> PostCity([Bind(nameof(City.CityId), nameof(City.CityName))] City city)
         {
             _context.Cities.Add(city);
             await _context.SaveChangesAsync();
