@@ -31,7 +31,8 @@ namespace CitiesManager.WebApi.Controllers
 
             if (city == null)
             {
-                return NotFound();
+                return Problem(detail: "Invalid CityId", statusCode: StatusCodes.Status400BadRequest, title: "City Search");
+                // return NotFound();
             }
 
             return city;
@@ -73,6 +74,12 @@ namespace CitiesManager.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<City>> PostCity([Bind(nameof(City.CityId), nameof(City.CityName))] City city)
         {
+            // Automatically done by [ApiController] attribute
+            //if (!ModelState.IsValid)
+            //{
+            //    return ValidationProblem(ModelState);
+            //}
+
             _context.Cities.Add(city);
             await _context.SaveChangesAsync();
 
