@@ -38,6 +38,21 @@ namespace CitiesManager.WebApi.Controllers
             return city;
         }
 
+        // Convert ActionResult<T> to IActionResult
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> GetCity(Guid id)
+        //{
+        //    var city = await _context.Cities.FindAsync(id);
+
+        //    if (city == null)
+        //    {
+        //        return Problem(detail: "Invalid CityId", statusCode: StatusCodes.Status400BadRequest, title: "City Search");
+        //        // return NotFound();
+        //    }
+
+        //    return Ok(city);
+        //}
+
         // PUT: api/Cities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
