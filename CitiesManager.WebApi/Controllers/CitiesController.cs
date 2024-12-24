@@ -5,10 +5,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CitiesManager.WebApi.Controllers
 {
+    /// <summary>
+    /// Action methods for Cities
+    /// </summary>
     public class CitiesController : CustomControllerBase
     {
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        /// Initialize Cities controller with its DbContext
+        /// </summary>
+        /// <param name="context">DbContext for Cities</param>
         public CitiesController(ApplicationDbContext context)
         {
             _context = context;
@@ -26,6 +33,11 @@ namespace CitiesManager.WebApi.Controllers
         }
 
         // GET: api/Cities/5
+        /// <summary>
+        /// Get city by CityId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>City object that matches with given CityId</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<City>> GetCity(Guid id)
         {
@@ -57,6 +69,12 @@ namespace CitiesManager.WebApi.Controllers
 
         // PUT: api/Cities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Update City that matches the provided CityId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="city"></param>
+        /// <returns>204 No Content if update is successful</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCity(Guid id, [Bind(nameof(City.CityId), nameof(City.CityName))] City city)
         {
@@ -88,6 +106,11 @@ namespace CitiesManager.WebApi.Controllers
 
         // POST: api/Cities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Upload new city object
+        /// </summary>
+        /// <param name="city"></param>
+        /// <returns>Uploaded City object</returns>
         [HttpPost]
         public async Task<ActionResult<City>> PostCity([Bind(nameof(City.CityId), nameof(City.CityName))] City city)
         {
@@ -104,6 +127,11 @@ namespace CitiesManager.WebApi.Controllers
         }
 
         // DELETE: api/Cities/5
+        /// <summary>
+        /// Delete City object with given ID from all cities
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>204 No Content if deletion is successful</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCity(Guid id)
         {

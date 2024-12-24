@@ -4,11 +4,51 @@
         <name>CitiesManager.WebApi</name>
     </assembly>
     <members>
+        <member name="T:CitiesManager.WebApi.Controllers.CitiesController">
+            <summary>
+            Action methods for Cities
+            </summary>
+        </member>
+        <member name="M:CitiesManager.WebApi.Controllers.CitiesController.#ctor(CitiesManager.WebApi.DatabaseContext.ApplicationDbContext)">
+            <summary>
+            Initialize Cities controller with its DbContext
+            </summary>
+            <param name="context">DbContext for Cities</param>
+        </member>
         <member name="M:CitiesManager.WebApi.Controllers.CitiesController.GetCities">
             <summary>
             To get list of cities from Cities table
             </summary>
             <returns>List of Cities</returns>
+        </member>
+        <member name="M:CitiesManager.WebApi.Controllers.CitiesController.GetCity(System.Guid)">
+            <summary>
+            Get city by CityId
+            </summary>
+            <param name="id"></param>
+            <returns>City object that matches with given CityId</returns>
+        </member>
+        <member name="M:CitiesManager.WebApi.Controllers.CitiesController.PutCity(System.Guid,CitiesManager.WebApi.Models.City)">
+            <summary>
+            Update City that matches the provided CityId
+            </summary>
+            <param name="id"></param>
+            <param name="city"></param>
+            <returns>204 No Content if update is successful</returns>
+        </member>
+        <member name="M:CitiesManager.WebApi.Controllers.CitiesController.PostCity(CitiesManager.WebApi.Models.City)">
+            <summary>
+            Upload new city object
+            </summary>
+            <param name="city"></param>
+            <returns>Uploaded City object</returns>
+        </member>
+        <member name="M:CitiesManager.WebApi.Controllers.CitiesController.DeleteCity(System.Guid)">
+            <summary>
+            Delete City object with given ID from all cities
+            </summary>
+            <param name="id"></param>
+            <returns>204 No Content if deletion is successful</returns>
         </member>
         <member name="T:CitiesManager.WebApi.Migrations.Initial">
             <inheritdoc />
