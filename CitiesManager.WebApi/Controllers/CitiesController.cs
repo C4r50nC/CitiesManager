@@ -27,6 +27,7 @@ namespace CitiesManager.WebApi.Controllers
         /// </summary>
         /// <returns>List of Cities</returns>
         [HttpGet]
+        [Produces("application/xml")]
         public async Task<ActionResult<IEnumerable<City>>> GetCities()
         {
             return await _context.Cities.OrderBy(city => city.CityName).ToListAsync();
