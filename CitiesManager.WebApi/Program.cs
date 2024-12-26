@@ -28,8 +28,7 @@ builder.Services
     {
         options.GroupNameFormat = "'v'VVV"; // Version number formatted as 'v'major[.minor][-status]
         options.SubstituteApiVersionInUrl = true;
-    })
-    .AddMvc(); // AddMvc() is necessary for API versioning setup after .NET 6
+    });
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
