@@ -24,7 +24,7 @@ namespace CitiesManager.WebApi.Controllers.V2
 
         // GET: api/Cities
         /// <summary>
-        /// To get list of cities names from Cities table
+        /// To get list of city names from Cities table
         /// </summary>
         /// <returns>List of city names</returns>
         [HttpGet]

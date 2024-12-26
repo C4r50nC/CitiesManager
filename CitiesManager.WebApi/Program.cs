@@ -13,16 +13,23 @@ builder.Services.AddControllers(options =>
     options.Filters.Add(new ConsumesAttribute("application/json"));
 }).AddXmlSerializerFormatters(); // Must be added to produce XML data
 
-builder.Services.AddApiVersioning(options =>
-{
-    // Read version number from request URL
-    options.ApiVersionReader = new UrlSegmentApiVersionReader(); // Using URL parameter "apiVersion"
-    // options.ApiVersionReader = new QueryStringApiVersionReader(); // Using query string, "api-version" by default
-    // options.ApiVersionReader = new HeaderApiVersionReader("api-version"); // Using request header parameter defined by user
+builder.Services
+    .AddApiVersioning(options =>
+    {
+        // Read version number from request URL
+        options.ApiVersionReader = new UrlSegmentApiVersionReader(); // Using URL parameter "apiVersion"
+        // options.ApiVersionReader = new QueryStringApiVersionReader(); // Using query string, "api-version" by default
+        // options.ApiVersionReader = new HeaderApiVersionReader("api-version"); // Using request header parameter defined by user
 
-    options.DefaultApiVersion = new ApiVersion(1, 0);
-    options.AssumeDefaultVersionWhenUnspecified = true;
-}).AddMvc(); // AddMvc() is necessary for API versioning setup after .NET 6
+        options.DefaultApiVersion = new ApiVersion(1, 0);
+        options.AssumeDefaultVersionWhenUnspecified = true;
+    })
+    .AddApiExplorer(options =>
+    {
+        options.GroupNameFormat = "'v'VVV"; // Version number formatted as 'v'major[.minor][-status]
+        options.SubstituteApiVersionInUrl = true;
+    })
+    .AddMvc(); // AddMvc() is necessary for API versioning setup after .NET 6
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -34,6 +41,16 @@ builder.Services.AddEndpointsApiExplorer(); // Generates description for all end
 builder.Services.AddSwaggerGen(options =>
 {
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "api.xml"));
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+    {
+        Title = "Cities Web API",
+        Version = "v1",
+    });
+    options.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo()
+    {
+        Title = "Cities Web API",
+        Version = "v2",
+    });
 }); // Generates Open API specification
 
 var app = builder.Build();
@@ -44,7 +61,11 @@ app.UseHsts();
 app.UseHttpsRedirection();
 
 app.UseSwagger(); // Creates endpoints for swagger.json
-app.UseSwaggerUI(); // Creates Swagger UI for testing API endpoints
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("v1/swagger.json", "1.0");
+    options.SwaggerEndpoint("v2/swagger.json", "2.0");
+}); // Creates Swagger UI for testing API endpoints
 
 app.UseAuthorization();
 
