@@ -1,13 +1,15 @@
-﻿using CitiesManager.WebApi.DatabaseContext;
+﻿using Asp.Versioning;
+using CitiesManager.WebApi.DatabaseContext;
 using CitiesManager.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace CitiesManager.WebApi.Controllers
+namespace CitiesManager.WebApi.Controllers.V1
 {
     /// <summary>
     /// Action methods for Cities
     /// </summary>
+    [ApiVersion("1.0")]
     public class CitiesController : CustomControllerBase
     {
         private readonly ApplicationDbContext _context;

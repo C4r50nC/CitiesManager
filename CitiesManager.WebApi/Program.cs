@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using CitiesManager.WebApi.DatabaseContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,17 @@ builder.Services.AddControllers(options =>
     options.Filters.Add(new ProducesAttribute("application/json"));
     options.Filters.Add(new ConsumesAttribute("application/json"));
 }).AddXmlSerializerFormatters(); // Must be added to produce XML data
+
+builder.Services.AddApiVersioning(options =>
+{
+    // Read version number from request URL
+    options.ApiVersionReader = new UrlSegmentApiVersionReader(); // Using URL parameter "apiVersion"
+    // options.ApiVersionReader = new QueryStringApiVersionReader(); // Using query string, "api-version" by default
+    // options.ApiVersionReader = new HeaderApiVersionReader("api-version"); // Using request header parameter defined by user
+
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+}).AddMvc(); // AddMvc() is necessary for API versioning setup after .NET 6
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
