@@ -54,15 +54,17 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policyBuilder =>
+    options.AddDefaultPolicy(policy =>
     {
         string[]? origins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
-        if (origins == null)
+        if (origins != null)
         {
-            return;
+            policy.WithOrigins(origins);
         }
 
-        policyBuilder.WithOrigins(origins);
+        policy
+            .WithHeaders("Authorization", "origin", "accept", "content-type")
+            .WithMethods("GET", "POST", "PUT", "DELETE");
     });
 });
 
