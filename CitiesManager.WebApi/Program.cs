@@ -52,6 +52,14 @@ builder.Services.AddSwaggerGen(options =>
     });
 }); // Generates Open API specification
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:4200");
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -65,6 +73,8 @@ app.UseSwaggerUI(options =>
     options.SwaggerEndpoint("v1/swagger.json", "1.0");
     options.SwaggerEndpoint("v2/swagger.json", "2.0");
 }); // Creates Swagger UI for testing API endpoints
+
+app.UseCors();
 
 app.UseAuthorization();
 
