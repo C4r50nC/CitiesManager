@@ -10,6 +10,7 @@ namespace CitiesManager.WebApi.Controllers.V1
     /// Action methods for Cities
     /// </summary>
     [ApiVersion("1.0")]
+    // [EnableCors("CustomRestrictedPolicy")] // Enable custom CORS policy from Program.cs
     public class CitiesController : CustomControllerBase
     {
         private readonly ApplicationDbContext _context;

@@ -66,6 +66,19 @@ builder.Services.AddCors(options =>
             .WithHeaders("Authorization", "origin", "accept", "content-type")
             .WithMethods("GET", "POST", "PUT", "DELETE");
     });
+
+    options.AddPolicy("CustomRestrictedPolicy", policy =>
+    {
+        string[]? origins = builder.Configuration.GetSection("AllowedRestrictedOrigins").Get<string[]>();
+        if (origins != null)
+        {
+            policy.WithOrigins(origins);
+        }
+
+        policy
+            .WithHeaders("Authorization", "origin", "accept")
+            .WithMethods("GET");
+    });
 });
 
 var app = builder.Build();
