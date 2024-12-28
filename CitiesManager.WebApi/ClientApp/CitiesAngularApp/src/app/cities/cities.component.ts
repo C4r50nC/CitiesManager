@@ -51,6 +51,7 @@ export class CitiesComponent {
         console.log(response);
         this.cities.push(new City(response.cityId, response.cityName));
         this.postCityForm.reset();
+        this.isPostCityFormSubmitted = false; // Reset error message status
       },
       error: (error: any) => console.error(error),
       complete: () => {},
