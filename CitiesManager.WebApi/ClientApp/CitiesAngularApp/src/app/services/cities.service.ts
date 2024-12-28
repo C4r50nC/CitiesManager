@@ -13,7 +13,9 @@ export class CitiesService {
 
   public getCities(): Observable<City[]> {
     let headers = new HttpHeaders();
-    headers = headers.append("Authorization", "Bearer myToken"); // Dummy auth header
-    return this.httpClient.get<City[]>('http://localhost:5104/api/v1/Cities', { headers: headers });
+    headers = headers.append('Authorization', 'Bearer myToken'); // Dummy auth header
+    return this.httpClient.get<City[]>('http://localhost:5104/api/v1/Cities', {
+      headers: headers,
+    });
   }
 }
