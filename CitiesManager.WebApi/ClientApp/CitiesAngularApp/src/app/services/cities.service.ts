@@ -3,7 +3,7 @@ import { City } from '../models/city';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const API_BASE_URL: string = 'http://localhost:5104/api/';
+const API_BASE_URL: string = 'https://localhost:7094/api/';
 
 @Injectable({
   providedIn: 'root',
