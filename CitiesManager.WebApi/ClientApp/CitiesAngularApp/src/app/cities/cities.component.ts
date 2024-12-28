@@ -14,6 +14,10 @@ export class CitiesComponent {
   constructor(private citiesService: CitiesService) {}
 
   ngOnInit() {
-    this.cities = this.citiesService.getCities();
+    this.citiesService.getCities().subscribe({
+      next: (response: City[]) => (this.cities = response),
+      error: (error: any) => console.error(error),
+      complete: () => {},
+    });
   }
 }
