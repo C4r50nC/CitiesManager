@@ -12,6 +12,6 @@ export class CitiesService {
   constructor(private httpClient: HttpClient) {}
 
   public getCities(): Observable<City[]> {
-    return this.httpClient.get<City[]>('http://localhost:5104/api/v1/Cities');
+    return this.httpClient.get<City[]>('https://localhost:7094/api/v1/Cities');
   }
 }
