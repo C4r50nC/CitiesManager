@@ -1,1 +1,21 @@
-<p>cities works!</p>
+<h2>Cities</h2>
+
+<div class="table-container">
+    <div class="table w-100">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>City Name</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (city of cities; track $index) {
+            <tr>
+                <td>{{$index}}</td>
+                <td>{{city.cityName}}</td>
+            </tr>
+            }
+        </tbody>
+    </div>
+</div>
