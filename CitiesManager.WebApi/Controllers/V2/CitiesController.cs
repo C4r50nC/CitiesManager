@@ -28,7 +28,7 @@ namespace CitiesManager.WebApi.Controllers.V2
         /// </summary>
         /// <returns>List of city names</returns>
         [HttpGet]
-        [Produces("application/xml")]
+        // [Produces("application/xml")]
         public async Task<ActionResult<IEnumerable<string>>> GetCities()
         {
             return await _context.Cities
