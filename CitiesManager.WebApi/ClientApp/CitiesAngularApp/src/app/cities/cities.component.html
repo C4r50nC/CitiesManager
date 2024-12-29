@@ -3,19 +3,32 @@
 <div class="flex">
     <div class="flex-1">
         <div class="table-container">
-            <div class="table w-100">
+            <div class="table w-100" [formGroup]="putCityForm">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>City Name</th>
+                        <th></th>
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody formArrayName="cities">
                     @for (city of cities; track $index) {
                     <tr>
-                        <td>{{$index}}</td>
-                        <td>{{city.cityName}}</td>
+                        <td>{{$index+1}}</td>
+                        <td [formGroupName]="$index">
+                            <input type="text" formControlName="cityName" [ngClass]="{
+                                    'border-less-textbox':city.cityId !== editedCityId,
+                                    'form-input':city.cityId === editedCityId
+                                    }" [disableControl]="city.cityId !== editedCityId" />
+                        </td>
+                        <td style="width: 200px;">
+                            @if (city.cityId != editedCityId) {
+                            <button class="button button-blue-back" (click)="editClicked(city)">Edit</button>
+                            } @else {
+                            <button class="button button-blue-back" (click)="updateClicked($index)">Update</button>
+                            }
+                        </td>
                     </tr>
                     }
                 </tbody>

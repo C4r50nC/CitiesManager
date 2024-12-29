@@ -2,32 +2,61 @@ import { Component } from '@angular/core';
 import { City } from '../models/city';
 import { CitiesService } from '../services/cities.service';
 import {
+  FormArray,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { DisableControlDirective } from '../directives/disable-control.directive';
 
 @Component({
   selector: 'app-cities',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule, DisableControlDirective],
   templateUrl: './cities.component.html',
   styleUrl: './cities.component.css',
 })
 export class CitiesComponent {
   cities: City[] = [];
+
   postCityForm: FormGroup;
   isPostCityFormSubmitted: boolean = false;
+
+  putCityForm: FormGroup;
+  editedCityId: string | null = null;
 
   constructor(private citiesService: CitiesService) {
     this.postCityForm = new FormGroup({
       cityName: new FormControl(null, [Validators.required]),
     });
+
+    this.putCityForm = new FormGroup({
+      cities: new FormArray([]),
+    });
+  }
+
+  get putCityFormArray(): FormArray {
+    return this.putCityForm.get('cities') as FormArray;
   }
 
   loadCities() {
     this.citiesService.getCities().subscribe({
-      next: (response: City[]) => (this.cities = response),
+      next: (response: City[]) => {
+        this.cities = response;
+
+        this.cities.forEach((city) => {
+          this.putCityFormArray.push(
+            new FormGroup({
+              cityId: new FormControl(city.cityId, [Validators.required]),
+              cityName: new FormControl(
+                { value: city.cityName, disabled: true },
+                [Validators.required]
+              ),
+            })
+          );
+        });
+      },
       error: (error: any) => console.error(error),
       complete: () => {},
     });
@@ -56,5 +85,25 @@ export class CitiesComponent {
       error: (error: any) => console.error(error),
       complete: () => {},
     });
+  }
+
+  editClicked(city: City): void {
+    this.editedCityId = city.cityId;
+  }
+
+  updateClicked(index: number): void {
+    this.citiesService
+      .putCity(this.putCityFormArray.controls[index].value)
+      .subscribe({
+        next: (response: string) => {
+          console.log(response);
+          this.putCityFormArray.controls[index].reset(
+            this.putCityFormArray.controls[index].value
+          );
+          this.editedCityId = null;
+        },
+        error: (error: any) => console.error(error),
+        complete: () => {},
+      });
   }
 }
