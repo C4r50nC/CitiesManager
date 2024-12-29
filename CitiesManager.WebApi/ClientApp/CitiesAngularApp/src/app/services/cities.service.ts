@@ -35,8 +35,12 @@ export class CitiesService {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', 'Bearer myToken'); // Dummy auth header
 
-    return this.httpClient.post<string>(`${API_BASE_URL}v1/Cities`, city, {
-      headers: headers,
-    });
+    return this.httpClient.post<string>(
+      `${API_BASE_URL}v1/Cities/${city.cityId}`,
+      city,
+      {
+        headers: headers,
+      }
+    );
   }
 }
