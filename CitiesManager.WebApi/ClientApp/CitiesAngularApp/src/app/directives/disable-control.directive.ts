@@ -8,7 +8,7 @@ export class DisableControlDirective {
   constructor(private ngControl: NgControl) {}
 
   @Input() set disableControl(isNotEditedCity: boolean) {
-    const control = this.ngControl.control as FormControl;
+    const control: FormControl = this.ngControl.control as FormControl;
 
     if (!control) {
       return;

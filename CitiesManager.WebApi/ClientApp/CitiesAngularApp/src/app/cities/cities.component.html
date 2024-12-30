@@ -15,7 +15,7 @@
                 <tbody formArrayName="cities">
                     @for (city of cities; track $index) {
                     <tr>
-                        <td>{{$index+1}}</td>
+                        <td>{{$index + 1}}</td>
                         <td [formGroupName]="$index">
                             <input type="text" formControlName="cityName" [ngClass]="{
                                     'border-less-textbox':city.cityId !== editedCityId,
@@ -48,8 +48,8 @@
 
                     <div class="flex-1">
                         <input type="text" class="form-input" formControlName="cityName" id="CityName" />
-                        @if ((postCity_CityNameControl.touched ||
-                        isPostCityFormSubmitted)&&postCity_CityNameControl.errors?.['required']) {
+                        @if ((postCity_CityNameControl.touched || isPostCityFormSubmitted)
+                        && postCity_CityNameControl.errors?.['required']) {
                         <span class="text-red">City Name cannot be blank</span>
                         }
                     </div>
