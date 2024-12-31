@@ -24,9 +24,13 @@
                         </td>
                         <td style="width: 200px;">
                             @if (city.cityId != editedCityId) {
-                            <button class="button button-blue-back" (click)="editClicked(city)">Edit</button>
+                            <button class="button button-blue-back" (click)="editClicked(city)"
+                                type="button">Edit</button>
+                            <button class="button button-red-back ml" (click)="deleteClicked(city, $index)"
+                                type="submit">Delete</button>
                             } @else {
-                            <button class="button button-blue-back" (click)="updateClicked($index)">Update</button>
+                            <button class="button button-blue-back" (click)="updateClicked($index)"
+                                type="button">Update</button>
                             }
                         </td>
                     </tr>

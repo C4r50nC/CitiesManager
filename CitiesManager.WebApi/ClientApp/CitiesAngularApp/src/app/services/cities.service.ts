@@ -43,4 +43,16 @@ export class CitiesService {
       }
     );
   }
+
+  public deleteCity(cityId: string | null): Observable<string> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', 'Bearer myToken'); // Dummy auth header
+
+    return this.httpClient.delete<string>(
+      `${API_BASE_URL}v1/Cities/${cityId}`,
+      {
+        headers: headers,
+      }
+    );
+  }
 }
