@@ -78,6 +78,15 @@ export class CitiesComponent {
     this.citiesService.postCity(this.postCityForm.value).subscribe({
       next: (response: City) => {
         console.log(response);
+        this.putCityFormArray.push(
+          new FormGroup({
+            cityId: new FormControl(response.cityId, [Validators.required]),
+            cityName: new FormControl(
+              { value: response.cityName, disabled: true },
+              [Validators.required]
+            ),
+          })
+        );
         this.cities.push(new City(response.cityId, response.cityName));
         this.postCityForm.reset();
         this.isPostCityFormSubmitted = false; // Reset error message status
