@@ -1,6 +1,6 @@
 ﻿using Asp.Versioning;
-using CitiesManager.WebApi.DatabaseContext;
-using CitiesManager.WebApi.Models;
+using CitiesManager.Core.Entities;
+using CitiesManager.Infrastructure.DatabaseContexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

@@ -14,7 +14,7 @@
             Action methods for Cities
             </summary>
         </member>
-        <member name="M:CitiesManager.WebApi.Controllers.V1.CitiesController.#ctor(CitiesManager.WebApi.DatabaseContext.ApplicationDbContext)">
+        <member name="M:CitiesManager.WebApi.Controllers.V1.CitiesController.#ctor(CitiesManager.Infrastructure.DatabaseContexts.ApplicationDbContext)">
             <summary>
             Initialize Cities controller with its DbContext
             </summary>
@@ -33,7 +33,7 @@
             <param name="id"></param>
             <returns>City object that matches with given CityId</returns>
         </member>
-        <member name="M:CitiesManager.WebApi.Controllers.V1.CitiesController.PutCity(System.Guid,CitiesManager.WebApi.Models.City)">
+        <member name="M:CitiesManager.WebApi.Controllers.V1.CitiesController.PutCity(System.Guid,CitiesManager.Core.Entities.City)">
             <summary>
             Update City that matches the provided CityId
             </summary>
@@ -41,7 +41,7 @@
             <param name="city"></param>
             <returns>204 No Content if update is successful</returns>
         </member>
-        <member name="M:CitiesManager.WebApi.Controllers.V1.CitiesController.PostCity(CitiesManager.WebApi.Models.City)">
+        <member name="M:CitiesManager.WebApi.Controllers.V1.CitiesController.PostCity(CitiesManager.Core.Entities.City)">
             <summary>
             Upload new city object
             </summary>
@@ -60,7 +60,7 @@
             Action methods for Cities
             </summary>
         </member>
-        <member name="M:CitiesManager.WebApi.Controllers.V2.CitiesController.#ctor(CitiesManager.WebApi.DatabaseContext.ApplicationDbContext)">
+        <member name="M:CitiesManager.WebApi.Controllers.V2.CitiesController.#ctor(CitiesManager.Infrastructure.DatabaseContexts.ApplicationDbContext)">
             <summary>
             Initialize Cities controller with its DbContext
             </summary>
@@ -71,30 +71,6 @@
             To get list of city names from Cities table
             </summary>
             <returns>List of city names</returns>
-        </member>
-        <member name="T:CitiesManager.WebApi.Migrations.Initial">
-            <inheritdoc />
-        </member>
-        <member name="M:CitiesManager.WebApi.Migrations.Initial.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:CitiesManager.WebApi.Migrations.Initial.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:CitiesManager.WebApi.Migrations.Initial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:CitiesManager.WebApi.Migrations.CityNameRequired">
-            <inheritdoc />
-        </member>
-        <member name="M:CitiesManager.WebApi.Migrations.CityNameRequired.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:CitiesManager.WebApi.Migrations.CityNameRequired.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:CitiesManager.WebApi.Migrations.CityNameRequired.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
         </member>
     </members>
 </doc>
