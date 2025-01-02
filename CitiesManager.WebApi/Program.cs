@@ -1,5 +1,8 @@
 using Asp.Versioning;
+using CitiesManager.Core.Identities;
 using CitiesManager.Infrastructure.DatabaseContexts;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -81,6 +84,20 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services
+    .AddIdentity<ApplicationUser, ApplicationRole>(options =>
+    {
+        options.Password.RequiredLength = 4;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireDigit = true;
+    })
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders()
+    .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ApplicationDbContext, Guid>>()
+    .AddRoleStore<RoleStore<ApplicationRole, ApplicationDbContext, Guid>>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -96,6 +113,8 @@ app.UseSwaggerUI(options =>
 }); // Creates Swagger UI for testing API endpoints
 
 app.UseCors();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
