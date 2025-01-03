@@ -9,7 +9,6 @@ namespace CitiesManager.WebApi.Controllers.V1
 {
     [ApiVersion("1.0")]
     [AllowAnonymous]
-    [Route("api/v{version:apiVersion}/[controller]/[action]")]
     public class AccountsController : CustomControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -23,7 +22,7 @@ namespace CitiesManager.WebApi.Controllers.V1
             _roleManager = roleManager;
         }
 
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<ActionResult<ApplicationUser>> PostRegister(RegisterDto registerDto)
         {
             if (!ModelState.IsValid)
@@ -52,7 +51,7 @@ namespace CitiesManager.WebApi.Controllers.V1
             return Ok(applicationUser);
         }
 
-        [HttpGet]
+        [HttpGet(nameof(IsEmailAlreadyRegistered))]
         public async Task<IActionResult> IsEmailAlreadyRegistered(string email)
         {
             if (await _userManager.FindByEmailAsync(email) == null)
