@@ -104,6 +104,7 @@ var app = builder.Build();
 
 app.UseHsts();
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseSwagger(); // Creates endpoints for swagger.json
 app.UseSwaggerUI(options =>
