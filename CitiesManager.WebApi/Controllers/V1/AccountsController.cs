@@ -61,5 +61,36 @@ namespace CitiesManager.WebApi.Controllers.V1
 
             return Ok(true);
         }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> PostLogin(LoginDto loginDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                string errorMessage = string.Join("\n", ModelState.Values.SelectMany(value => value.Errors).Select(error => error.ErrorMessage));
+                return Problem(errorMessage);
+            }
+
+            Microsoft.AspNetCore.Identity.SignInResult signInResult = await _signInManager.PasswordSignInAsync(loginDto.Email, loginDto.Password, false, false);
+            if (!signInResult.Succeeded)
+            {
+                return Problem("Invalid email or password");
+            }
+
+            ApplicationUser? applicationUser = await _userManager.FindByEmailAsync(loginDto.Email);
+            if (applicationUser == null)
+            {
+                return NoContent();
+            }
+
+            return Ok(new { personName = applicationUser.PersonName, email = applicationUser.Email });
+        }
+
+        [HttpGet("LogOut")]
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return NoContent();
+        }
     }
 }
