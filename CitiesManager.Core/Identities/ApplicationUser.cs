@@ -4,6 +4,6 @@ namespace CitiesManager.Core.Identities
 {
     public class ApplicationUser : IdentityUser<Guid>
     {
-        public string? PersonName { get; set; }
+        public string PersonName { get; set; } = "";
     }
 }
