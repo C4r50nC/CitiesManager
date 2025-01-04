@@ -62,6 +62,7 @@ export class RegisterComponent {
     this.accountsService.postRegister(this.registerForm.value).subscribe({
       next: (response: RegisterUser) => {
         console.log(response);
+
         this.isRegisterFormSubmitted = false;
         this.router.navigate(['/cities']);
         this.registerForm.reset();

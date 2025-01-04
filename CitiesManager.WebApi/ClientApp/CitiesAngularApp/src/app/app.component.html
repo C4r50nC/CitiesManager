@@ -9,12 +9,12 @@
         <div class="flex-1 pr" id="search-box-div">
           <div class="navbar account-links">
             <ul>
-              <li>
-                <a [routerLink]="['/login']">Login</a>
-              </li>
-              <li>
-                <a [routerLink]="['/register']">Register</a>
-              </li>
+              @if (accountsService.currentUsername == null || accountsService.currentUsername === '') {
+              <li><a [routerLink]="['/login']">Login</a></li>
+              <li><a [routerLink]="['/register']">Register</a></li>
+              } @else {
+              <li><a href="#" onclick="return false" (click)="onLogOutClicked()">Log Out</a></li>
+              }
             </ul>
           </div>
         </div>

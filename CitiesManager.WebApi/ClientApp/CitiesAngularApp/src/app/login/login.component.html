@@ -1,0 +1,50 @@
+<div class="w-75 margin-auto">
+    <div class="form-container">
+        <h2>Login</h2>
+
+        <form [formGroup]="loginForm" (ngSubmit)="loginSubmitted()">
+            <div class="form-field flex">
+                <div class="w-25">
+                    <label for="person-email" class="form-label pt">Email</label>
+                </div>
+
+                <div class="flex-1">
+                    <input type="text" id="person-email" class="form-input" formControlName="email" />
+                    @if ((login_emailControl.touched ||
+                    isLoginFormSubmitted) && login_emailControl.errors?.['required'])
+                    {
+                    <span class="text-red">Email cannot be blank</span>
+                    }
+                    @if ((login_emailControl.touched ||
+                    isLoginFormSubmitted) && login_emailControl.errors?.['email'])
+                    {
+                    <span class="text-red">Email format is invalid</span>
+                    }
+                </div>
+            </div>
+
+            <div class="form-field flex">
+                <div class="w-25">
+                    <label for="account-password" class="form-label pt">Password</label>
+                </div>
+
+                <div class="flex-1">
+                    <input type="password" id="account-password" class="form-input" formControlName="password" />
+                    @if ((login_passwordControl.touched ||
+                    isLoginFormSubmitted) && login_passwordControl.errors?.['required'])
+                    {
+                    <span class="text-red">Password cannot be blank</span>
+                    }
+                </div>
+            </div>
+
+            <div class="form-field flex">
+                <div class="w-25"></div>
+
+                <div class="flex-1">
+                    <button type="submit" class="button button-green-back">Log In</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
