@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CitiesManager.WebApi.Controllers.V1
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [ApiVersion("1.0")]
     [AllowAnonymous]
     public class AccountsController : CustomControllerBase
@@ -15,6 +18,12 @@ namespace CitiesManager.WebApi.Controllers.V1
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="signInManager"></param>
+        /// <param name="roleManager"></param>
         public AccountsController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager)
         {
             _userManager = userManager;
@@ -22,6 +31,11 @@ namespace CitiesManager.WebApi.Controllers.V1
             _roleManager = roleManager;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="registerDto"></param>
+        /// <returns></returns>
         [HttpPost("Register")]
         public async Task<ActionResult<ApplicationUser>> PostRegister(RegisterDto registerDto)
         {
@@ -51,6 +65,11 @@ namespace CitiesManager.WebApi.Controllers.V1
             return Ok(applicationUser);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         [HttpGet(nameof(IsEmailAlreadyRegistered))]
         public async Task<IActionResult> IsEmailAlreadyRegistered(string email)
         {
@@ -62,6 +81,11 @@ namespace CitiesManager.WebApi.Controllers.V1
             return Ok(true);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="loginDto"></param>
+        /// <returns></returns>
         [HttpPost("Login")]
         public async Task<IActionResult> PostLogin(LoginDto loginDto)
         {
@@ -86,6 +110,10 @@ namespace CitiesManager.WebApi.Controllers.V1
             return Ok(new { personName = applicationUser.PersonName, email = applicationUser.Email });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("LogOut")]
         public async Task<IActionResult> LogOut()
         {
