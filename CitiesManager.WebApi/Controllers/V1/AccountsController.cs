@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using CitiesManager.Core.Dto;
 using CitiesManager.Core.Identities;
+using CitiesManager.Core.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ namespace CitiesManager.WebApi.Controllers.V1
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly IJwtService _jwtService;
 
         /// <summary>
         /// 
@@ -24,11 +26,13 @@ namespace CitiesManager.WebApi.Controllers.V1
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         /// <param name="roleManager"></param>
-        public AccountsController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager)
+        /// <param name="jwtService"></param>
+        public AccountsController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager, IJwtService jwtService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _jwtService = jwtService;
         }
 
         /// <summary>
@@ -61,8 +65,9 @@ namespace CitiesManager.WebApi.Controllers.V1
             }
 
             await _signInManager.SignInAsync(applicationUser, false);
+            AuthenticationResponseDto authenticationResponse = _jwtService.CreateJwtToken(applicationUser);
 
-            return Ok(applicationUser);
+            return Ok(authenticationResponse);
         }
 
         /// <summary>
@@ -107,7 +112,9 @@ namespace CitiesManager.WebApi.Controllers.V1
                 return NoContent();
             }
 
-            return Ok(new { personName = applicationUser.PersonName, email = applicationUser.Email });
+            AuthenticationResponseDto authenticationResponse = _jwtService.CreateJwtToken(applicationUser);
+
+            return Ok(authenticationResponse);
         }
 
         /// <summary>
