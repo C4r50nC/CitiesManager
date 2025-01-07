@@ -20,6 +20,7 @@ export class AppComponent {
         console.log(response);
 
         this.accountsService.currentUsername = null;
+        localStorage.removeItem('token');
         this.router.navigate(['/login']);
       },
       error: (error: any) => console.error(error),
