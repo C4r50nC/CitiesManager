@@ -118,6 +118,10 @@ namespace CitiesManager.WebApi.Controllers.V1
 
             AuthenticationResponseDto authenticationResponse = _jwtService.CreateJwtToken(applicationUser);
 
+            applicationUser.RefreshToken = authenticationResponse.RefreshToken;
+            applicationUser.RefreshTokenExpirationDateTime = authenticationResponse.RefreshTokenExpirationDateTime;
+            await _userManager.UpdateAsync(applicationUser);
+
             return Ok(authenticationResponse);
         }
 
