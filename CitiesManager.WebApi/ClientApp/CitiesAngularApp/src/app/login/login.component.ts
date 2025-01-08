@@ -51,6 +51,7 @@ export class LoginComponent {
         this.accountsService.currentUsername = response.email;
 
         localStorage['token'] = response.token;
+        localStorage['refreshToken'] = response.refreshToken;
 
         this.router.navigate(['/cities']);
         this.loginForm.reset();
