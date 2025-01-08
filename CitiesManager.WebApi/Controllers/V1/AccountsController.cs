@@ -67,6 +67,10 @@ namespace CitiesManager.WebApi.Controllers.V1
             await _signInManager.SignInAsync(applicationUser, false);
             AuthenticationResponseDto authenticationResponse = _jwtService.CreateJwtToken(applicationUser);
 
+            applicationUser.RefreshToken = authenticationResponse.RefreshToken;
+            applicationUser.RefreshTokenExpirationDateTime = authenticationResponse.RefreshTokenExpirationDateTime;
+            await _userManager.UpdateAsync(applicationUser);
+
             return Ok(authenticationResponse);
         }
 

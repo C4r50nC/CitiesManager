@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace CitiesManager.Core.Services
@@ -57,7 +58,17 @@ namespace CitiesManager.Core.Services
                 PersonName = applicationUser.PersonName,
                 Token = tokenValueString,
                 Expiration = expiration,
+                RefreshToken = GenerateRefreshToken(),
+                RefreshTokenExpirationDateTime = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_configuration["RefreshToken:EXPIRATION_MINUTES"])),
             };
+        }
+
+        private static string GenerateRefreshToken()
+        {
+            byte[] bytes = new byte[64];
+            RandomNumberGenerator randomNumberGenerator = RandomNumberGenerator.Create();
+            randomNumberGenerator.GetBytes(bytes);
+            return Convert.ToBase64String(bytes);
         }
     }
 }
