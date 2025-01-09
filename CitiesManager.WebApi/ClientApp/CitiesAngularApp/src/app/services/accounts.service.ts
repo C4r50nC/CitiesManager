@@ -16,16 +16,16 @@ export class AccountsService {
 
   public postRegister(registerUser: RegisterUser): Observable<any> {
     return this.httpClient.post<RegisterUser>(
-      `${API_BASE_URL}/Register`,
+      `${API_BASE_URL}Register`,
       registerUser
     );
   }
 
   public postLogin(loginUser: LoginUser): Observable<any> {
-    return this.httpClient.post<any>(`${API_BASE_URL}/Login`, loginUser);
+    return this.httpClient.post<any>(`${API_BASE_URL}Login`, loginUser);
   }
 
   public getLogOut(): Observable<string> {
-    return this.httpClient.get<string>(`${API_BASE_URL}/LogOut`);
+    return this.httpClient.get<string>(`${API_BASE_URL}LogOut`);
   }
 }
