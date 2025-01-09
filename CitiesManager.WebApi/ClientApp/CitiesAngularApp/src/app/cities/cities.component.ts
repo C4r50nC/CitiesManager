@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DisableControlDirective } from '../directives/disable-control.directive';
+import { AccountsService } from '../services/accounts.service';
 
 @Component({
   selector: 'app-cities',
@@ -26,7 +27,10 @@ export class CitiesComponent {
   putCityForm: FormGroup;
   editedCityId: string | null = null;
 
-  constructor(private citiesService: CitiesService) {
+  constructor(
+    private citiesService: CitiesService,
+    private accountsService: AccountsService
+  ) {
     this.postCityForm = new FormGroup({
       cityName: new FormControl(null, [Validators.required]),
     });
@@ -126,6 +130,21 @@ export class CitiesComponent {
         console.log(response);
         this.putCityFormArray.removeAt(index);
         this.cities.splice(index, 1);
+      },
+      error: (error: any) => console.error(error),
+      complete: () => {},
+    });
+  }
+
+  // Can be transformed to an automated process without button clicks
+  refreshClicked(): void {
+    this.accountsService.postGenerateNewToken().subscribe({
+      next: (response: any) => {
+        console.log(response);
+        localStorage['token'] = response.token;
+        localStorage['refreshToken'] = response.refreshToken;
+
+        this.loadCities();
       },
       error: (error: any) => console.error(error),
       complete: () => {},
