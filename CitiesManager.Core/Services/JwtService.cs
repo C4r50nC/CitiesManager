@@ -28,7 +28,8 @@ namespace CitiesManager.Core.Services
                 new Claim(JwtRegisteredClaimNames.Sub, applicationUser.Id.ToString()), // Subject (user ID)
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // JWT unique ID
                 new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()), // Issued at
-                new Claim(ClaimTypes.NameIdentifier, applicationUser.Email?.ToString() ?? "") // Unique identifier of user
+                new Claim(ClaimTypes.NameIdentifier, applicationUser.Email?.ToString() ?? ""), // Unique identifier of user
+                new Claim(ClaimTypes.Email, applicationUser.Email?.ToString() ?? ""),
             ];
 
             string? jwtSecret = _configuration["Jwt:Key"]; // Need to read from environment variables for real projects

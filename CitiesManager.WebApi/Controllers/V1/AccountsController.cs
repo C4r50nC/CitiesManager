@@ -157,7 +157,7 @@ namespace CitiesManager.WebApi.Controllers.V1
             }
 
             // Must match with JwtService.CreateJwtToken()
-            string? email = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+            string? email = claimsPrincipal.FindFirstValue(ClaimTypes.Email);
             if (string.IsNullOrEmpty(email))
             {
                 return BadRequest("Invalid request tokens");
