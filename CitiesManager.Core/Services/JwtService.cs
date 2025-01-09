@@ -70,5 +70,38 @@ namespace CitiesManager.Core.Services
             randomNumberGenerator.GetBytes(bytes);
             return Convert.ToBase64String(bytes);
         }
+
+        public ClaimsPrincipal? GetPrincipalFromJwtToken(string? jwtToken)
+        {
+            string? securityKey = _configuration["Jwt:Key"];
+            if (string.IsNullOrEmpty(securityKey))
+            {
+                throw new NullReferenceException();
+            }
+
+            TokenValidationParameters tokenValidationParameters = new()
+            {
+                ValidateAudience = true,
+                ValidAudience = _configuration["Jwt:Audience"],
+                ValidateIssuer = true,
+                ValidIssuer = _configuration["Jwt:Issuer"],
+
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey)),
+
+                ValidateLifetime = false, // Skip lifetime validation to refresh expired tokens
+            };
+
+            JwtSecurityTokenHandler jwtSecurityTokenHandler = new();
+            ClaimsPrincipal claimsPrincipal = jwtSecurityTokenHandler.ValidateToken(jwtToken, tokenValidationParameters, out SecurityToken securityToken);
+
+            if (securityToken is not JwtSecurityToken jwtSecurityToken
+                || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new SecurityTokenException("Invalid security token");
+            }
+
+            return claimsPrincipal;
+        }
     }
 }

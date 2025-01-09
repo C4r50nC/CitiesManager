@@ -5,6 +5,7 @@ using CitiesManager.Core.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CitiesManager.WebApi.Controllers.V1
 {
@@ -134,6 +135,46 @@ namespace CitiesManager.WebApi.Controllers.V1
         {
             await _signInManager.SignOutAsync();
             return NoContent();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tokenDto"></param>
+        /// <returns></returns>
+        [HttpPost("generate-new-jwt-token")]
+        public async Task<IActionResult> GenerateNewAccessToken(TokenDto tokenDto)
+        {
+            if (tokenDto == null)
+            {
+                return BadRequest("Invalid client request");
+            }
+
+            ClaimsPrincipal? claimsPrincipal = _jwtService.GetPrincipalFromJwtToken(tokenDto.Token);
+            if (claimsPrincipal == null)
+            {
+                return BadRequest("Invalid JWT access token");
+            }
+
+            // Must match with JwtService.CreateJwtToken()
+            string? email = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(email))
+            {
+                return BadRequest("Invalid request tokens");
+            }
+
+            ApplicationUser? applicationUser = await _userManager.FindByEmailAsync(email);
+            if (applicationUser == null || applicationUser.RefreshToken != tokenDto.RefreshToken || applicationUser.RefreshTokenExpirationDateTime <= DateTime.UtcNow)
+            {
+                return BadRequest("Invalid request tokens");
+            }
+
+            AuthenticationResponseDto authenticationResponseDto = _jwtService.CreateJwtToken(applicationUser);
+            applicationUser.RefreshToken = authenticationResponseDto.RefreshToken;
+            applicationUser.RefreshTokenExpirationDateTime = authenticationResponseDto.RefreshTokenExpirationDateTime;
+            await _userManager.UpdateAsync(applicationUser);
+
+            return Ok(authenticationResponseDto);
         }
     }
 }

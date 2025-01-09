@@ -50,6 +50,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CitiesManager.WebApi.Controllers.V1.AccountsController.GenerateNewAccessToken(CitiesManager.Core.Dto.TokenDto)">
+            <summary>
+            
+            </summary>
+            <param name="tokenDto"></param>
+            <returns></returns>
+        </member>
         <member name="T:CitiesManager.WebApi.Controllers.V1.CitiesController">
             <summary>
             Action methods for Cities
